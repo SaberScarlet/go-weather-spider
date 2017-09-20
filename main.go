@@ -12,13 +12,22 @@ import (
 	"fmt"
 
 	"strings"
+	"time"
 )
 type P map[string]interface{}
-var Cityname = P{"beijing": "北京"}
-var Cityweater string
-var tablename=P{"城市":"citynm","省份":"provice","天气":"weather","气温℃":"temp","湿度(%)":"humidity","风向":"wind","风速(级别)":"省份","空气质量级别":"winp","PM2.5":"api","时间":"update"}
+var (
+	Cityweater string
+	Cityname =P{"beijing": "北京"}
+	/*Cityname = P{"beijing": "北京","tianjin": "天津","shijiazhuang":"河北",
+		"taiyuan":"山西","huhehaote": "内蒙古","shenyang": "辽宁",
+		"dalian": "辽宁","changchun": "吉林","haerbin":"黑龙江","shanghai":"上海","nanjing": "江苏","hangzhou": "浙江","ningbo":"浙江","hefei":"安徽","fuzhou": "福建","xiamen": "福建","nanchang": "江西",
+		"jinan":"山东","qingdao":"山东","zhengzhou": "河南","wuhan": "湖北",
+		"changsha":"湖南","guangzhou":"广东","shenzhen": "广东","nanning": "广西","haikou": "海南","chongqing": "重庆","chengdu": "四川","guiyang": "贵州","kunming": "云南",
+		"lasa":"西藏","xian": "陕西","lanzhou": "甘肃","xining": "青海","yinchuan":"宁夏","wulumuqi":"新疆"}*/
+	tablename=P{"城市":"citynm","省份":"provice","天气":"weather","气温℃":"temp","湿度(%)":"humidity","风向":"wind","风速(级别)":"winp","空气质量级别":"winp","PM2.5":"api","时间":"update"}
+)
 const  (
-	weathername  = "城市,省份,天气,气温℃,湿度(%),风向,风速(级别),空气质量级别,PM2.5,时间\n"
+	weathername  = "城市,省份,天气,气温℃,湿度(%),风向,风速(级别),PM2.5,时间\n"
 	upurl_path string = "https://www.datahunter.cn/api/pub"
 	upload_url string  ="https://www.datahunter.cn/api/upload"
 )
@@ -39,9 +48,11 @@ func Get(url string) (content string, statusCode int) {
 	return
 }
 func GetthType(name string)(nametype string){
-	if strings.Contains(name, "风速(级别)")||strings.Contains(name, "湿度")||strings.Contains(name, "PM2.5")||strings.Contains(name, "气温(℃)"){
+	if strings.Contains(name, "风速(级别)")||strings.Contains(name, "湿度")||strings.Contains(name, "PM2.5")||strings.Contains(name, "气温℃"){
 		return  "int"
-	}else  {
+	}else if strings.Contains(name, "时间") {
+		return "date"
+	}else {
 		return "text"
 	}
 
@@ -151,8 +162,9 @@ func Upurl(name string,url string,key string,mode string, fmt1 string,th string)
 	return  err
 }
 func main() {
+	t:=time.Now()
 	for k,_:=range Cityname{
-		s, statusCode := Get("http://api.k780.com:88/?app=weather.history&weaid=" + k + "&date=" + "2017-09-09" + "&appkey=23789&sign=abe1ba69c5f65c3fd1d95c535a5f7ed4&format=json")
+		s, statusCode := Get("http://api.k780.com:88/?app=weather.history&weaid=" + k + "&date=" + t.Add(-24*time.Hour).String()[0:10] + "&appkey=23789&sign=abe1ba69c5f65c3fd1d95c535a5f7ed4&format=json")
 		if statusCode != 200 {
 			return
 		}
@@ -164,23 +176,21 @@ func main() {
 			Cityweater=Cityweater+b["citynm"].(string)+","
 			Cityweater=Cityweater+Cityname[b["cityno"].(string)].(string)+","
 			Cityweater=Cityweater+b["weather"].(string)+","
-			Cityweater=Cityweater+b["citynm"].(string)+","
-			Cityweater=Cityweater+b["temp"].(string)+","
-			Cityweater=Cityweater+b["humidity"].(string)+","
+			Cityweater=Cityweater+ strings.Trim(b["temp"].(string), "℃")+","
+			Cityweater=Cityweater+strings.Trim(b["humidity"].(string), "%")+","
 			Cityweater=Cityweater+b["wind"].(string)+","
-			Cityweater=Cityweater+b["winp"].(string)+","
+			Cityweater=Cityweater+strings.Trim(b["winp"].(string), "级")+","
 			Cityweater=Cityweater+b["aqi"].(string)+","
 			Cityweater=Cityweater+b["uptime"].(string)+"\n"
 		}
 	}
-	tocsverr:=Tocsv("F:\\gopachong\\天气数据.csv",weathername+Cityweater)
+	tocsverr:=Tocsv("F:\\gopachong\\天气数据-"+t.Add(-24*time.Hour).String()[0:10]+".csv",weathername+Cityweater)
 	if tocsverr =="nil"{
 		fmt.Println("csv输出失败")
 	}else {
 		fmt.Println("csv成功生成,接下来上传csv")
 		slice:=strings.Split( strings.Trim(weathername, "\n"),",")
 		namep:= []P{}
-
 		for _,v:=range slice{
 			nametype:=GetthType(v)
 			p:=P{}
@@ -189,15 +199,8 @@ func main() {
 			p["type"]=nametype
 			namep=append(namep,p)
 		}
-
 		byte,_:=json.Marshal(namep)
-
-
-		Uplaodcsv("测试","F:\\gopachong\\天气数据.csv","mrocker","2","gdp",string(byte))
-
-
-
-
+		Uplaodcsv("测试","F:\\gopachong\\天气数据-"+t.Add(-24*time.Hour).String()[0:10]+".csv","mrocker","2","gdp",string(byte))
 	}
 
 }
