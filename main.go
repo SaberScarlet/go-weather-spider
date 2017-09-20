@@ -10,9 +10,9 @@ import (
 	"mime/multipart"
 	"bytes"
 	"fmt"
-
 	"strings"
 	"time"
+	"github.com/robfig/cron"
 )
 type P map[string]interface{}
 var (
@@ -161,7 +161,7 @@ func Upurl(name string,url string,key string,mode string, fmt1 string,th string)
 	fmt.Println(resp)
 	return  err
 }
-func main() {
+func task(){
 	t:=time.Now()
 	for k,_:=range Cityname{
 		s, statusCode := Get("http://api.k780.com:88/?app=weather.history&weaid=" + k + "&date=" + t.Add(-24*time.Hour).String()[0:10] + "&appkey=23789&sign=abe1ba69c5f65c3fd1d95c535a5f7ed4&format=json")
@@ -201,7 +201,14 @@ func main() {
 		}
 		byte,_:=json.Marshal(namep)
 		Uplaodcsv("测试","F:\\gopachong\\天气数据-"+t.Add(-24*time.Hour).String()[0:10]+".csv","mrocker","2","gdp",string(byte))
-	}
+	}}
+
+func main() {
+	s:=make(chan int)
+	c := cron.New()
+	c.AddFunc("0 0 1 * * ?", task)
+	c.Start()
+	<-s
 
 }
 
