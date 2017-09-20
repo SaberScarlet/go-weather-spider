@@ -1,0 +1,56 @@
+<component name="libraryTable">
+  <library name="GOPATH &lt;weather&gt;">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../myfirst" />
+      <root url="file://$PROJECT_DIR$/../pachong" />
+      <root url="file://$PROJECT_DIR$/../datahunter.cn" />
+      <root url="file://$PROJECT_DIR$/../gopkg.in" />
+      <root url="file://$PROJECT_DIR$/../dataspider" />
+      <root url="file://$PROJECT_DIR$/../csvtest" />
+      <root url="file://$PROJECT_DIR$/../code.google.com" />
+      <root url="file://$PROJECT_DIR$/../git.mrocker.com" />
+      <root url="file://$PROJECT_DIR$/../goweb" />
+      <root url="file://$PROJECT_DIR$/../labix.org" />
+      <root url="file://$PROJECT_DIR$/../golang.org" />
+      <root url="file://$PROJECT_DIR$/../github.com" />
+      <root url="file://$PROJECT_DIR$/../stathat.com" />
+      <root url="file://$PROJECT_DIR$/../bee" />
+      <root url="file://$PROJECT_DIR$/../beeblog" />
+      <root url="file://$PROJECT_DIR$/../myfirstweb" />
+      <root url="file://$PROJECT_DIR$/../DhBeat---flow" />
+      <root url="file://$PROJECT_DIR$/../dhbeat" />
+      <root url="file://$PROJECT_DIR$/../test" />
+      <root url="file://$PROJECT_DIR$/../spider" />
+      <root url="file://$PROJECT_DIR$/../hangshu" />
+      <root url="file://$PROJECT_DIR$/../k2db" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../myfirst" />
+      <root url="file://$PROJECT_DIR$/../pachong" />
+      <root url="file://$PROJECT_DIR$/../datahunter.cn" />
+      <root url="file://$PROJECT_DIR$/../gopkg.in" />
+      <root url="file://$PROJECT_DIR$/../dataspider" />
+      <root url="file://$PROJECT_DIR$/../csvtest" />
+      <root url="file://$PROJECT_DIR$/../code.google.com" />
+      <root url="file://$PROJECT_DIR$/../git.mrocker.com" />
+      <root url="file://$PROJECT_DIR$/../goweb" />
+      <root url="file://$PROJECT_DIR$/../labix.org" />
+      <root url="file://$PROJECT_DIR$/../golang.org" />
+      <root url="file://$PROJECT_DIR$/../github.com" />
+      <root url="file://$PROJECT_DIR$/../stathat.com" />
+      <root url="file://$PROJECT_DIR$/../bee" />
+      <root url="file://$PROJECT_DIR$/../beeblog" />
+      <root url="file://$PROJECT_DIR$/../myfirstweb" />
+      <root url="file://$PROJECT_DIR$/../DhBeat---flow" />
+      <root url="file://$PROJECT_DIR$/../dhbeat" />
+      <root url="file://$PROJECT_DIR$/../test" />
+      <root url="file://$PROJECT_DIR$/../spider" />
+      <root url="file://$PROJECT_DIR$/../hangshu" />
+      <root url="file://$PROJECT_DIR$/../k2db" />
+    </SOURCES>
+    <excluded>
+      <root url="file://$PROJECT_DIR$" />
+    </excluded>
+  </library>
+</component>
